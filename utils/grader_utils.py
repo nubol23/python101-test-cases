@@ -23,9 +23,8 @@ class Grader:
         self.post_data[task_id] = output
         
     def grade(self):
-#        os.chdir(self.tests_path)
         outputs = []
-        for file in os.listdir(self.tests_path):
+        for file in sorted(os.listdir(self.tests_path)):
             if 'test' in file:
                 with open(self.tests_path+'/'+file, 'r') as f:
                     inp = f.read()
@@ -34,12 +33,9 @@ class Grader:
                 
                 outputs.append(out)
                 
-#        print(outputs)
         self.post_data['n_tasks'] = len(outputs)
         for i, out in enumerate(outputs):
             self.add_task(f"t{i+1}", out.decode('utf-8').strip())
-            
-#        print(self.post_data)
     
         response = post('https://python-course.herokuapp.com/grader', json=self.post_data)
         
