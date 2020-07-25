@@ -11,7 +11,7 @@ def getUrlMonth(site_url, sub_url):
         links.append(line.find("a").get("href"))
     return links
 
-def getDatos(receta_i):
+def getDatos(receta_i, site):
     print("Obteniendo datos para: \n" + receta_i)
     Page_i = bs(urllib.request.urlopen(site+ receta_i), "html.parser")
     try:
