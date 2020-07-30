@@ -1,6 +1,7 @@
 import os
 import subprocess
 from requests import post
+import pickle
 
 class Grader:
     def __init__(self, section_id, user_email, n_tasks=0, tests_path: str = None, code_file: str = None):
