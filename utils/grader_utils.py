@@ -3,7 +3,7 @@ import subprocess
 from requests import post
 
 class Grader:
-    def __init__(self, section_id, user_email, n_tasks, tests_path: str = None, code_file: str = None):
+    def __init__(self, section_id, user_email, n_tasks=0, tests_path: str = None, code_file: str = None):
         self.post_data = {'section_id': section_id,
                           'user_email': user_email,
                           'n_tasks': int(n_tasks)}
@@ -38,6 +38,24 @@ class Grader:
             self.add_task(f"t{i+1}", out.decode('utf-8').strip())
     
         self.grade()
+        
+    def eval_func(self, tests_file, func):
+        error = False
+        res = []
+        with open(tests_file, 'rb') as f:
+            while True:
+                try:
+                    res.append(func(pickle.load(f)))
+                except EOFError:
+                    break
+        
+        i = len(self.post_data) - 3
+        for val in res:
+            self.add_task(f"t{i+1}", str(val))
+            i += 1
+            
+        self.post_data['n_tasks'] = len(self.post_data) - 3
+    
         
     def grade(self):
         response = post('https://python-course.herokuapp.com/grader', json=self.post_data)
