@@ -8,7 +8,7 @@ def mostrar_imagen(file_path):
     plt.show()
     
 def mostrar_recommendaciones(query_dish, recommendations):
-    query_image = 'static/renamed_images/'+ '_'.join(query_dish.split()).lower() + '.png'
+    query_image = 'tests/project/imgs/'+ query_dish + '.png'
     print(query_dish)
     mostrar_imagen(query_image)
 
@@ -16,6 +16,6 @@ def mostrar_recommendaciones(query_dish, recommendations):
     print('_'*50)
     print()
     for recommendation in recommendations:
-        recommendation_image = 'static/renamed_images/'+ '_'.join(recommendation.split()).lower() + '.png'
+        recommendation_image = 'tests/project/imgs/'+ recommendation + '.png'
         print(recommendation)
         mostrar_imagen(recommendation_image)
